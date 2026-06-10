@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentino & Gina — Gallery</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --gold: #c9a96e;
+            --dark: #0e0c08;
+            --cream: #f5f0e8;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--dark);
+            font-family: 'Jost', sans-serif;
+            cursor: default;
+        }
+
+        /* ══════════════════════════════════
+   SCROLL CONTAINER
+══════════════════════════════════ */
+        .gallery-scroll {
+            position: fixed;
+            inset: 0;
+            overflow: hidden
+        }
+
+        .gallery-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            transition: transform 1.1s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
+        }
+
+        /* ══════════════════════════════════
+   PANELS
+══════════════════════════════════ */
+        .panel {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0s, transform 0s;
+        }
+
+        .panel.in-view {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .panel.above {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        /* ── FULL PANEL ── */
+        .panel.full .panel-img {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+            transform: scale(1.06);
+        }
+
+        .panel.full.in-view .panel-img {
+            animation: kbFull 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes kbFull {
+            0% {
+                transform: scale(1.07) translate(1%, 0.5%)
+            }
+
+            100% {
+                transform: scale(1.0) translate(0, 0)
+            }
+        }
+
+        /* ── SPLIT PANEL ── */
+        .panel.split {
+            display: flex
+        }
+
+        .split-half {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .split-half+.split-half {
+            border-left: 2px solid rgba(255, 255, 255, 0.06)
+        }
+
+        .split-half .panel-img {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.55s ease;
+            transform: scale(1.08);
+            will-change: transform, filter;
+        }
+
+        /* KB on split halves when in-view */
+        .panel.in-view .split-half:nth-child(1) .panel-img {
+            animation: kbSplitL 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .panel.in-view .split-half:nth-child(2) .panel-img {
+            animation: kbSplitR 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes kbSplitL {
+            0% {
+                transform: scale(1.09) translate(1.5%, 0.5%)
+            }
+
+            100% {
+                transform: scale(1.0) translate(0, 0)
+            }
+        }
+
+        @keyframes kbSplitR {
+            0% {
+                transform: scale(1.09) translate(-1.5%, -0.5%)
+            }
+
+            100% {
+                transform: scale(1.0) translate(0, 0)
+            }
+        }
+
+        /* ══════════════════════════════════
+   HOVER BLUR — split panels
+   When hovering the parent .panel.split,
+   blur ALL halves, then un-blur only the hovered one
+══════════════════════════════════ */
+        .panel.split:hover .split-half .panel-img {
+            filter: blur(4px) brightness(0.7);
+            transform: scale(1.04);
+            /* override KB animation so blur works cleanly */
+            animation: none;
+        }
+
+        .panel.split:hover .split-half:hover .panel-img {
+            filter: blur(0px) brightness(1.05);
+            transform: scale(1.06);
+        }
+
+        /* Scale up overlay slightly on hovered half for depth */
+        .panel.split .split-half {
+            transition: flex 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .panel.split:hover .split-half:hover {
+            flex: 1.08;
+        }
+
+        /* Hover glow border on active half */
+        .split-half::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            border: 1px solid rgba(201, 169, 110, 0);
+            pointer-events: none;
+            transition: border-color 0.4s ease;
+        }
+
+        .panel.split:hover .split-half:hover::after {
+            border-color: rgba(201, 169, 110, 0.22);
+        }
+
+        /* ── OVERLAYS ── */
+        .panel-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to bottom, rgba(0, 0, 0, .22) 0%, transparent 20%, transparent 70%, rgba(0, 0, 0, .55) 100%),
+                radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .42) 100%);
+            z-index: 2;
+            pointer-events: none;
+            transition: opacity 0.55s ease;
+        }
+
+        .panel.split:hover .split-half .panel-overlay {
+            opacity: 1.4
+        }
+
+        .panel.split:hover .split-half:hover .panel-overlay {
+            opacity: 0.7
+        }
+
+        /* Grain */
+        .panel-grain {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* ── CAPTION ── */
+        .panel-caption {
+            position: absolute;
+            bottom: 52px;
+            left: 52px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+        }
+
+        .panel.in-view .panel-caption {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        /* On split: caption only shows on hovered half */
+        .split-half .panel-caption {
+            left: 32px;
+            bottom: 40px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+
+        .panel.in-view .split-half .panel-caption {
+            opacity: 0;
+            transform: translateY(8px);
+            /* hidden by default even in-view */
+        }
+
+        .split-half:hover .panel-caption {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        .panel-caption-label {
+            font-weight: 200;
+            font-size: 9px;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .panel-caption-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: clamp(12px, 1.4vw, 15px);
+            color: rgba(255, 255, 255, .55);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── PANEL NUMBER ── */
+        .panel-number {
+            position: absolute;
+            top: 50%;
+            right: 32px;
+            transform: translateY(-50%);
+            z-index: 10;
+            font-weight: 200;
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            color: rgba(255, 255, 255, .22);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            pointer-events: none;
+        }
+
+        /* ══════════════════════════════════
+   FIXED UI
+══════════════════════════════════ */
+
+        /* ── NAV ARROWS + CLOSE — bottom-right stack ── */
+        .nav-arrows {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── CLOSE BTN — inside nav-arrows, below arrows ── */
+        .btn-close {
+            width: 52px;
+            height: 52px;
+            background: rgba(14, 12, 8, 0.88);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.65);
+            transition: background 0.3s, color 0.3s;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            border-top: none;
+        }
+
+        .btn-close:hover {
+            background: rgba(201, 169, 110, 0.2);
+            color: var(--gold)
+        }
+
+        .btn-close svg {
+            width: 16px;
+            height: 16px
+        }
+
+        .btn-arrow {
+            width: 52px;
+            height: 52px;
+            background: rgba(14, 12, 8, 0.88);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-arrow:hover {
+            background: rgba(201, 169, 110, 0.2);
+            color: var(--gold)
+        }
+
+        .btn-arrow:active {
+            transform: scale(0.9)
+        }
+
+        .btn-arrow.disabled {
+            opacity: 0.2;
+            pointer-events: none
+        }
+
+        .btn-arrow svg {
+            width: 14px;
+            height: 14px
+        }
+
+        .btn-arrow:first-of-type {
+            border-top: 1px solid rgba(255, 255, 255, 0.07)
+        }
+
+        .btn-close {
+            border-top: none
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 52px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 36px;
+            background: linear-gradient(to bottom, rgba(14, 12, 8, .65) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .top-bar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .top-bar-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 1.3
+        }
+
+        .top-bar-title {
+            font-weight: 200;
+            font-size: 9px;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .42)
+        }
+
+        .top-bar-label {
+            font-weight: 200;
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .28)
+        }
+
+        /* ── TRANSITION FLASH ── */
+        #transFlash {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            pointer-events: none;
+            opacity: 0;
+            background: rgba(201, 169, 110, 0.05);
+            transition: opacity 0.15s ease;
+        }
+
+        /* ── SCROLL PROGRESS LINE ── */
+        .scroll-progress {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 1.5px;
+            height: 0%;
+            background: linear-gradient(to bottom, rgba(201, 169, 110, .25), var(--gold));
+            z-index: 1000;
+            transition: height 1.1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+        @media(max-width:768px) {
+            .panel.split {
+                flex-direction: column
+            }
+
+            .split-half {
+                height: 50vh
+            }
+
+            .split-half+.split-half {
+                border-left: none;
+                border-top: 2px solid rgba(255, 255, 255, 0.06)
+            }
+
+            .panel-caption {
+                left: 20px;
+                bottom: 30px
+            }
+
+            .split-half .panel-caption {
+                left: 16px;
+                bottom: 20px
+            }
+
+            .top-bar {
+                padding: 14px 18px
+            }
+
+            /* on mobile tap = hover, so keep blur off */
+            .panel.split:hover .split-half .panel-img {
+                filter: none;
+                transform: scale(1.0)
+            }
+
+            .panel.split:hover .split-half:hover .panel-img {
+                filter: none
+            }
+        }
+
+        @media(max-width:480px) {
+            .panel-caption-label {
+                display: none
+            }
+
+            .panel-number {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Transition flash -->
+    <div id="transFlash"></div>
+
+    <!-- Scroll progress line -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-brand">
+            <div class="top-bar-icon">
+                
+            </div>
+            
+        </div>
+        <span class="top-bar-label">Valentino &amp; Gina · June 2025</span>
+    </div>
+
+    <!-- NAV ARROWS + CLOSE stacked at bottom-right -->
+    <div class="nav-arrows">
+        <a href="index.html" class="btn-close" title="Back to Album">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </a>
+        <button class="btn-arrow disabled" id="btnUp" title="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="18 15 12 9 6 15" />
+            </svg>
+        </button>
+        <button class="btn-arrow" id="btnDown" title="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="6 9 12 15 18 9" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- ════════════════════════════
+    GALLERY SCROLL CONTAINER
+════════════════════════════ -->
+    <div class="gallery-scroll">
+        <div class="gallery-track" id="galleryTrack">
+
+            <!-- PANEL 1: FULL WIDTH -->
+            <div class="panel full in-view" data-index="0">
+                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/26965603/pexels-photo-26965603.jpeg');background-color:#d4c8b8"></div>
+                <div class="panel-overlay"></div>
+                <div class="panel-grain"></div>
+                <div class="panel-caption">
+                    <span class="panel-caption-label">01 · Ceremony</span>
+                    <span class="panel-caption-text">Vineyard Estate · June 14, 2025</span>
+                </div>
+                <div class="panel-number">01 / 07</div>
+            </div>
+
+            <!-- PANEL 2: SPLIT -->
+            <div class="panel split" data-index="1">
+                <div class="split-half">
+                    <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/13434437/pexels-photo-13434437.jpeg');background-color:#c8b8a8"></div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">02 · Rings</span>
+                        <span class="panel-caption-text">The Exchange of Vows</span>
+                    </div>
+                </div>
+                <div class="split-half">
+                    <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/17529847/pexels-photo-17529847.jpeg');background-color:#1a1810"></div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">03 · Bouquet</span>
+                        <span class="panel-caption-text">Details in Bloom</span>
+                    </div>
+                </div>
+                <div class="panel-number">02 / 07</div>
+            </div>
+
+            <!-- PANEL 3: FULL -->
+            <div class="panel full" data-index="2">
+                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/29002699/pexels-photo-29002699.jpeg');background-color:#18200e"></div>
+                <div class="panel-overlay"></div>
+                <div class="panel-grain"></div>
+                <div class="panel-caption">
+                    <span class="panel-caption-label">03 · First Dance</span>
+                    <span class="panel-caption-text">Moonlit Garden · June 14, 2025</span>
+                </div>
+                <div class="panel-number">03 / 07</div>
+            </div>
+
+            <!-- PANEL 4: SPLIT -->
+            <div class="panel split" data-index="3">
+                <div class="split-half">
+                    <div class="panel-img"
+                        style="background-image:url('https://images.pexels.com/photos/13434437/pexels-photo-13434437.jpeg');background-color:#2a1810;background-position:70% center">
+                    </div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">04 · Hands</span>
+                        <span class="panel-caption-text">Reaching for Forever</span>
+                    </div>
+                </div>
+                <div class="split-half">
+                    <div class="panel-img"
+                        style="background-image:url('https://images.pexels.com/photos/26965603/pexels-photo-26965603.jpeg');background-color:#d0c8b8;background-position:80% center">
+                    </div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">04 · Lace</span>
+                        <span class="panel-caption-text">Delicate Details</span>
+                    </div>
+                </div>
+                <div class="panel-number">04 / 07</div>
+            </div>
+
+            <!-- PANEL 5: FULL -->
+            <div class="panel full" data-index="4">
+                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/17529847/pexels-photo-17529847.jpeg');background-color:#100c08"></div>
+                <div class="panel-overlay"></div>
+                <div class="panel-grain"></div>
+                <div class="panel-caption">
+                    <span class="panel-caption-label">05 · The Kiss</span>
+                    <span class="panel-caption-text">Forest Chapel · June 14, 2025</span>
+                </div>
+                <div class="panel-number">05 / 07</div>
+            </div>
+
+            <!-- PANEL 6: SPLIT -->
+            <div class="panel split" data-index="5">
+                <div class="split-half">
+                    <div class="panel-img"
+                        style="background-image:url('https://images.pexels.com/photos/29002699/pexels-photo-29002699.jpeg');background-color:#1e1408;background-position:30% center">
+                    </div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">06 · Reception</span>
+                        <span class="panel-caption-text">Candlelit Evening</span>
+                    </div>
+                </div>
+                <div class="split-half">
+                    <div class="panel-img"
+                        style="background-image:url('https://images.pexels.com/photos/26965603/pexels-photo-26965603.jpeg');background-color:#ccc0a8;background-position:20% center">
+                    </div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">06 · Veil</span>
+                        <span class="panel-caption-text">A Moment Suspended</span>
+                    </div>
+                </div>
+                <div class="panel-number">06 / 07</div>
+            </div>
+
+            <!-- PANEL 7: FULL — Finale -->
+            <div class="panel full" data-index="6">
+                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/13434437/pexels-photo-13434437.jpeg');background-color:#1e1210"></div>
+                <div class="panel-overlay"></div>
+                <div class="panel-grain"></div>
+                <div
+                    style="position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;pointer-events:none">
+                    <p
+                        style="font-weight:200;font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">
+                        Forever</p>
+                    <h2
+                        style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(38px,7vw,80px);color:#fff;line-height:.95">
+                        Valentino <span style="color:var(--gold)">&amp;</span> Gina
+                    </h2>
+                    <div style="width:36px;height:1px;background:var(--gold);margin:24px auto"></div>
+                    <p
+                        style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(13px,1.6vw,17px);color:rgba(255,255,255,.58);max-width:480px;line-height:1.8">
+                        June 14, 2025 &nbsp;·&nbsp; A day written in love
+                    </p>
+                </div>
+                <div class="panel-caption">
+                    <span class="panel-caption-label">07 · Forever</span>
+                    <span class="panel-caption-text">End of the album</span>
+                </div>
+                <div class="panel-number">07 / 07</div>
+            </div>
+
+        </div><!-- /gallery-track -->
+    </div><!-- /gallery-scroll -->
+
+    <script>
+        const track = document.getElementById('galleryTrack');
+        const panels = [...document.querySelectorAll('.panel')];
+        const btnUp = document.getElementById('btnUp');
+        const btnDown = document.getElementById('btnDown');
+        const transFlash = document.getElementById('transFlash');
+        const scrollProg = document.getElementById('scrollProgress');
+
+        const TOTAL = panels.length;
+        let current = 0;
+        let isScrolling = false;
+
+        function updateUI() {
+            btnUp.classList.toggle('disabled', current === 0);
+            btnDown.classList.toggle('disabled', current === TOTAL - 1);
+            scrollProg.style.height = `${(current / (TOTAL - 1)) * 100}%`;
+        }
+
+        function goTo(index) {
+            if (isScrolling) return;
+            if (index < 0 || index >= TOTAL) return;
+            isScrolling = true;
+
+            current = index;
+
+            // gold flash
+            transFlash.style.opacity = '1';
+            setTimeout(() => { transFlash.style.opacity = '0'; }, 130);
+
+            // slide track
+            track.style.transform = `translateY(${-current * 100}vh)`;
+
+            // update panel states
+            panels.forEach((p, i) => {
+                p.classList.remove('in-view', 'above');
+                if (i === current) {
+                    setTimeout(() => p.classList.add('in-view'), 90);
+                } else if (i < current) {
+                    p.classList.add('above');
+                }
+            });
+
+            updateUI();
+            setTimeout(() => { isScrolling = false; }, 1160);
+        }
+
+        // Buttons
+        btnUp.addEventListener('click', () => goTo(current - 1));
+        btnDown.addEventListener('click', () => goTo(current + 1));
+
+        // Keyboard
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') goTo(current + 1);
+            if (e.key === 'ArrowUp' || e.key === 'PageUp') goTo(current - 1);
+            if (e.key === 'Escape') window.location.href = 'index.html';
+        });
+
+        // Wheel
+        let wheelTimer = null;
+        document.addEventListener('wheel', e => {
+            e.preventDefault();
+            clearTimeout(wheelTimer);
+            wheelTimer = setTimeout(() => {
+                e.deltaY > 0 ? goTo(current + 1) : goTo(current - 1);
+            }, 50);
+        }, { passive: false });
+
+        // Touch
+        let touchY = 0;
+        document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', e => {
+            const dy = touchY - e.changedTouches[0].clientY;
+            if (Math.abs(dy) > 50) { dy > 0 ? goTo(current + 1) : goTo(current - 1); }
+        }, { passive: true });
+
+        // Init
+        updateUI();
+        setTimeout(() => panels[0].classList.add('in-view'), 100);
+    </script>
+</body>
+
+</html>
