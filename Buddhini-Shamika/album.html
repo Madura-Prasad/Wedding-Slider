@@ -2,20 +2,20 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Valentino & Gina — Gallery</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
     <style>
         *,
         *::before,
         *::after {
             margin: 0;
             padding: 0;
-            box-sizing: border-box
+            box-sizing: border-box;
         }
 
         :root {
@@ -31,7 +31,7 @@
             height: 100%;
             overflow: hidden;
             background: var(--dark);
-            font-family: 'Jost', sans-serif;
+            font-family: "Jost", sans-serif;
             cursor: default;
         }
 
@@ -41,7 +41,7 @@
         .gallery-scroll {
             position: fixed;
             inset: 0;
-            overflow: hidden
+            overflow: hidden;
         }
 
         .gallery-track {
@@ -68,12 +68,12 @@
 
         .panel.in-view {
             opacity: 1;
-            transform: translateY(0)
+            transform: translateY(0);
         }
 
         .panel.above {
             opacity: 1;
-            transform: translateY(0)
+            transform: translateY(0);
         }
 
         /* ── FULL PANEL ── */
@@ -83,7 +83,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+            transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.6s ease;
             transform: scale(1.06);
         }
 
@@ -93,17 +94,17 @@
 
         @keyframes kbFull {
             0% {
-                transform: scale(1.07) translate(1%, 0.5%)
+                transform: scale(1.07) translate(1%, 0.5%);
             }
 
             100% {
-                transform: scale(1.0) translate(0, 0)
+                transform: scale(1) translate(0, 0);
             }
         }
 
         /* ── SPLIT PANEL ── */
         .panel.split {
-            display: flex
+            display: flex;
         }
 
         .split-half {
@@ -114,7 +115,7 @@
         }
 
         .split-half+.split-half {
-            border-left: 2px solid rgba(255, 255, 255, 0.06)
+            border-left: 2px solid rgba(255, 255, 255, 0.06);
         }
 
         .split-half .panel-img {
@@ -124,8 +125,7 @@
             background-position: center;
             background-repeat: no-repeat;
             transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                filter 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.55s ease;
+                filter 0.55s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.55s ease;
             transform: scale(1.08);
             will-change: transform, filter;
         }
@@ -141,21 +141,21 @@
 
         @keyframes kbSplitL {
             0% {
-                transform: scale(1.09) translate(1.5%, 0.5%)
+                transform: scale(1.09) translate(1.5%, 0.5%);
             }
 
             100% {
-                transform: scale(1.0) translate(0, 0)
+                transform: scale(1) translate(0, 0);
             }
         }
 
         @keyframes kbSplitR {
             0% {
-                transform: scale(1.09) translate(-1.5%, -0.5%)
+                transform: scale(1.09) translate(-1.5%, -0.5%);
             }
 
             100% {
-                transform: scale(1.0) translate(0, 0)
+                transform: scale(1) translate(0, 0);
             }
         }
 
@@ -187,7 +187,7 @@
 
         /* Hover glow border on active half */
         .split-half::after {
-            content: '';
+            content: "";
             position: absolute;
             inset: 0;
             z-index: 5;
@@ -204,20 +204,25 @@
         .panel-overlay {
             position: absolute;
             inset: 0;
-            background:
-                linear-gradient(to bottom, rgba(0, 0, 0, .22) 0%, transparent 20%, transparent 70%, rgba(0, 0, 0, .55) 100%),
-                radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .42) 100%);
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.22) 0%,
+                    transparent 20%,
+                    transparent 70%,
+                    rgba(0, 0, 0, 0.55) 100%),
+                radial-gradient(ellipse at center,
+                    transparent 45%,
+                    rgba(0, 0, 0, 0.42) 100%);
             z-index: 2;
             pointer-events: none;
             transition: opacity 0.55s ease;
         }
 
         .panel.split:hover .split-half .panel-overlay {
-            opacity: 1.4
+            opacity: 1.4;
         }
 
         .panel.split:hover .split-half:hover .panel-overlay {
-            opacity: 0.7
+            opacity: 0.7;
         }
 
         /* Grain */
@@ -244,7 +249,7 @@
 
         .panel.in-view .panel-caption {
             opacity: 1;
-            transform: translateY(0)
+            transform: translateY(0);
         }
 
         /* On split: caption only shows on hovered half */
@@ -278,11 +283,11 @@
         }
 
         .panel-caption-text {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: "Cormorant Garamond", serif;
             font-style: italic;
             font-weight: 300;
             font-size: clamp(12px, 1.4vw, 15px);
-            color: rgba(255, 255, 255, .55);
+            color: rgba(255, 255, 255, 0.55);
             letter-spacing: 0.05em;
         }
 
@@ -296,7 +301,7 @@
             font-weight: 200;
             font-size: 9px;
             letter-spacing: 0.3em;
-            color: rgba(255, 255, 255, .22);
+            color: rgba(255, 255, 255, 0.22);
             writing-mode: vertical-rl;
             text-orientation: mixed;
             pointer-events: none;
@@ -335,12 +340,12 @@
 
         .btn-close:hover {
             background: rgba(201, 169, 110, 0.2);
-            color: var(--gold)
+            color: var(--gold);
         }
 
         .btn-close svg {
             width: 16px;
-            height: 16px
+            height: 16px;
         }
 
         .btn-arrow {
@@ -359,29 +364,29 @@
 
         .btn-arrow:hover {
             background: rgba(201, 169, 110, 0.2);
-            color: var(--gold)
+            color: var(--gold);
         }
 
         .btn-arrow:active {
-            transform: scale(0.9)
+            transform: scale(0.9);
         }
 
         .btn-arrow.disabled {
             opacity: 0.2;
-            pointer-events: none
+            pointer-events: none;
         }
 
         .btn-arrow svg {
             width: 14px;
-            height: 14px
+            height: 14px;
         }
 
         .btn-arrow:first-of-type {
-            border-top: 1px solid rgba(255, 255, 255, 0.07)
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .btn-close {
-            border-top: none
+            border-top: none;
         }
 
         /* ── TOP BAR ── */
@@ -395,14 +400,16 @@
             align-items: center;
             justify-content: space-between;
             padding: 18px 36px;
-            background: linear-gradient(to bottom, rgba(14, 12, 8, .65) 0%, transparent 100%);
+            background: linear-gradient(to bottom,
+                    rgba(14, 12, 8, 0.65) 0%,
+                    transparent 100%);
             pointer-events: none;
         }
 
         .top-bar-brand {
             display: flex;
             align-items: center;
-            gap: 10px
+            gap: 10px;
         }
 
         .top-bar-icon svg {
@@ -410,7 +417,7 @@
             height: 20px;
             stroke: var(--gold);
             fill: none;
-            stroke-width: 1.3
+            stroke-width: 1.3;
         }
 
         .top-bar-title {
@@ -418,7 +425,7 @@
             font-size: 9px;
             letter-spacing: 0.38em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, .42)
+            color: rgba(255, 255, 255, 0.42);
         }
 
         .top-bar-label {
@@ -426,7 +433,7 @@
             font-size: 9px;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, .28)
+            color: rgba(255, 255, 255, 0.28);
         }
 
         /* ── TRANSITION FLASH ── */
@@ -447,7 +454,9 @@
             top: 0;
             width: 1.5px;
             height: 0%;
-            background: linear-gradient(to bottom, rgba(201, 169, 110, .25), var(--gold));
+            background: linear-gradient(to bottom,
+                    rgba(201, 169, 110, 0.25),
+                    var(--gold));
             z-index: 1000;
             transition: height 1.1s cubic-bezier(0.77, 0, 0.175, 1);
         }
@@ -455,59 +464,58 @@
         /* ══════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════ */
-        @media(max-width:768px) {
+        @media (max-width: 768px) {
             .panel.split {
-                flex-direction: column
+                flex-direction: column;
             }
 
             .split-half {
-                height: 50vh
+                height: 50vh;
             }
 
             .split-half+.split-half {
                 border-left: none;
-                border-top: 2px solid rgba(255, 255, 255, 0.06)
+                border-top: 2px solid rgba(255, 255, 255, 0.06);
             }
 
             .panel-caption {
                 left: 20px;
-                bottom: 30px
+                bottom: 30px;
             }
 
             .split-half .panel-caption {
                 left: 16px;
-                bottom: 20px
+                bottom: 20px;
             }
 
             .top-bar {
-                padding: 14px 18px
+                padding: 14px 18px;
             }
 
             /* on mobile tap = hover, so keep blur off */
             .panel.split:hover .split-half .panel-img {
                 filter: none;
-                transform: scale(1.0)
+                transform: scale(1);
             }
 
             .panel.split:hover .split-half:hover .panel-img {
-                filter: none
+                filter: none;
             }
         }
 
-        @media(max-width:480px) {
+        @media (max-width: 480px) {
             .panel-caption-label {
-                display: none
+                display: none;
             }
 
             .panel-number {
-                display: none
+                display: none;
             }
         }
     </style>
 </head>
 
 <body>
-
     <!-- Transition flash -->
     <div id="transFlash"></div>
 
@@ -517,10 +525,7 @@
     <!-- TOP BAR -->
     <div class="top-bar">
         <div class="top-bar-brand">
-            <div class="top-bar-icon">
-                
-            </div>
-            
+            <div class="top-bar-icon"></div>
         </div>
         <span class="top-bar-label">Valentino &amp; Gina · June 2025</span>
     </div>
@@ -550,10 +555,13 @@
 ════════════════════════════ -->
     <div class="gallery-scroll">
         <div class="gallery-track" id="galleryTrack">
-
             <!-- PANEL 1: FULL WIDTH -->
             <div class="panel full in-view" data-index="0">
-                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/26965603/pexels-photo-26965603.jpeg');background-color:#d4c8b8; opacity: 0.4;"></div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1STfVZpryTkxG5QgxeoyD58RUwocZDno9&sz=w2000');
+              background-color: #d4c8b8;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
                 <div class="panel-caption">
@@ -566,7 +574,11 @@
             <!-- PANEL 2: SPLIT -->
             <div class="panel split" data-index="1">
                 <div class="split-half">
-                    <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/13434437/pexels-photo-13434437.jpeg');background-color:#c8b8a8; opacity: 0.4 ;"></div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=19n9ARBMNBqfkoxJWg5hvbh2rtmx6tPCf&sz=w2000');
+                background-color: #c8b8a8;
+                opacity: 0.4;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -575,7 +587,11 @@
                     </div>
                 </div>
                 <div class="split-half">
-                    <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/17529847/pexels-photo-17529847.jpeg');background-color:#1a1810 ; opacity: 0.4;"></div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1_6J3jzyNQEPyOmPmsq1KcVoxsa1QuXO6&sz=w2000');
+                background-color: #1a1810;
+                opacity: 0.4;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -588,7 +604,11 @@
 
             <!-- PANEL 3: FULL -->
             <div class="panel full" data-index="2">
-                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/29002699/pexels-photo-29002699.jpeg');background-color:#18200e ; opacity: 0.4;"></div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1sCa2NhIAavJls-nEPWaU7MYen4TBfOQv&sz=w2000');
+              background-color: #18200e;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
                 <div class="panel-caption">
@@ -601,9 +621,12 @@
             <!-- PANEL 4: SPLIT -->
             <div class="panel split" data-index="3">
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image:url('https://images.pexels.com/photos/13434437/pexels-photo-13434437.jpeg');background-color:#2a1810;background-position:70% center ; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1Md3darDeha4qBEa0_vgDiA-ZWGWDy74t&sz=w2000');
+                background-color: #2a1810;
+                background-position: 70% center;
+                opacity: 0.4;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -612,9 +635,12 @@
                     </div>
                 </div>
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image:url('https://images.pexels.com/photos/26965603/pexels-photo-26965603.jpeg');background-color:#d0c8b8;background-position:80% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=18kapZEiRL9n_H0FXNt4fTZjBDajaDuVd&sz=w2000');
+                background-color: #d0c8b8;
+                background-position: 80% center;
+                opacity: 0.4;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -627,7 +653,11 @@
 
             <!-- PANEL 5: FULL -->
             <div class="panel full" data-index="4">
-                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/17529847/pexels-photo-17529847.jpeg');background-color:#100c08 ; opacity: 0.4;"></div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1fP5umfFwUpElAapRU0a1ffX23kRngOK5&sz=w2000');
+              background-color: #100c08;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
                 <div class="panel-caption">
@@ -640,9 +670,12 @@
             <!-- PANEL 6: SPLIT -->
             <div class="panel split" data-index="5">
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image:url('https://images.pexels.com/photos/29002699/pexels-photo-29002699.jpeg');background-color:#1e1408;background-position:30% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=14Ms8rpKlSZYXvI_WY5Px9Wk0GFusucFc&sz=w2000');
+                background-color: #1e1408;
+                background-position: 30% center;
+                opacity: 0.4;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -651,9 +684,12 @@
                     </div>
                 </div>
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image:url('https://images.pexels.com/photos/26965603/pexels-photo-26965603.jpeg');background-color:#ccc0a8;background-position:20% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1eyTd5B_xkUikDcHtoUJ_5-d5v2HTbf9L&sz=w2000');
+                background-color: #ccc0a8;
+                background-position: 20% center;
+                opacity: 0.4;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -664,23 +700,111 @@
                 <div class="panel-number">06 / 07</div>
             </div>
 
-            <!-- PANEL 7: FULL — Finale -->
-            <div class="panel full" data-index="6">
-                <div class="panel-img" style="background-image:url('https://images.pexels.com/photos/13434437/pexels-photo-13434437.jpeg');background-color:#1e1210; opacity: 0.25; "></div>
+            <!-- PANEL 7: FULL -->
+            <div class="panel full" data-index="4">
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1G9fASUWzCE93bBICe8RSlLsHdfxP42GG&sz=w2000');
+              background-color: #100c08;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
-                <div
-                    style="position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;pointer-events:none">
-                    <p
-                        style="font-weight:200;font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">
-                        Forever</p>
-                    <h2
-                        style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(38px,7vw,80px);color:#fff;line-height:.95">
-                        Valentino <span style="color:var(--gold)">&amp;</span> Gina
+                <div class="panel-caption">
+                    <span class="panel-caption-label">05 · The Kiss</span>
+                    <span class="panel-caption-text">Forest Chapel · June 14, 2025</span>
+                </div>
+                <div class="panel-number">05 / 07</div>
+            </div>
+
+            <!-- PANEL 8: SPLIT -->
+            <div class="panel split" data-index="5">
+                <div class="split-half">
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1RuKwVI6xuINW7u8mCyWMfHRBzPgUb_KM&sz=w2000');
+                background-color: #1e1408;
+                background-position: 30% center;
+                opacity: 0.4;
+              "></div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">06 · Reception</span>
+                        <span class="panel-caption-text">Candlelit Evening</span>
+                    </div>
+                </div>
+                <div class="split-half">
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=18cVVxkgZ82kiTCv6oLwtDbfE8-mX9fzK&sz=w2000');
+                background-color: #ccc0a8;
+                background-position: 20% center;
+                opacity: 0.4;
+              "></div>
+                    <div class="panel-overlay"></div>
+                    <div class="panel-grain"></div>
+                    <div class="panel-caption">
+                        <span class="panel-caption-label">06 · Veil</span>
+                        <span class="panel-caption-text">A Moment Suspended</span>
+                    </div>
+                </div>
+                <div class="panel-number">06 / 07</div>
+            </div>
+
+            <!-- PANEL 9: FULL — Finale -->
+            <div class="panel full" data-index="6">
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1dP4GtC0a3uPlmr19wYA2Y8Rt8AhGt-Bu&sz=w2000');
+              background-color: #1e1210;
+              opacity: 0.25;
+            "></div>
+                <div class="panel-overlay"></div>
+                <div class="panel-grain"></div>
+                <div style="
+              position: absolute;
+              inset: 0;
+              z-index: 9;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              padding: 20px;
+              pointer-events: none;
+            ">
+                    <p style="
+                font-weight: 200;
+                font-size: 9px;
+                letter-spacing: 0.42em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 18px;
+              ">
+                        Forever
+                    </p>
+                    <h2 style="
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-weight: 300;
+                font-size: clamp(38px, 7vw, 80px);
+                color: #fff;
+                line-height: 0.95;
+              ">
+                        Valentino <span style="color: var(--gold)">&amp;</span> Gina
                     </h2>
-                    <div style="width:36px;height:1px;background:var(--gold);margin:24px auto"></div>
-                    <p
-                        style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(13px,1.6vw,17px);color:rgba(255,255,255,.58);max-width:480px;line-height:1.8">
+                    <div style="
+                width: 36px;
+                height: 1px;
+                background: var(--gold);
+                margin: 24px auto;
+              "></div>
+                    <p style="
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-weight: 300;
+                font-size: clamp(13px, 1.6vw, 17px);
+                color: rgba(255, 255, 255, 0.58);
+                max-width: 480px;
+                line-height: 1.8;
+              ">
                         June 14, 2025 &nbsp;·&nbsp; A day written in love
                     </p>
                 </div>
@@ -690,25 +814,26 @@
                 </div>
                 <div class="panel-number">07 / 07</div>
             </div>
-
-        </div><!-- /gallery-track -->
-    </div><!-- /gallery-scroll -->
+        </div>
+        <!-- /gallery-track -->
+    </div>
+    <!-- /gallery-scroll -->
 
     <script>
-        const track = document.getElementById('galleryTrack');
-        const panels = [...document.querySelectorAll('.panel')];
-        const btnUp = document.getElementById('btnUp');
-        const btnDown = document.getElementById('btnDown');
-        const transFlash = document.getElementById('transFlash');
-        const scrollProg = document.getElementById('scrollProgress');
+        const track = document.getElementById("galleryTrack");
+        const panels = [...document.querySelectorAll(".panel")];
+        const btnUp = document.getElementById("btnUp");
+        const btnDown = document.getElementById("btnDown");
+        const transFlash = document.getElementById("transFlash");
+        const scrollProg = document.getElementById("scrollProgress");
 
         const TOTAL = panels.length;
         let current = 0;
         let isScrolling = false;
 
         function updateUI() {
-            btnUp.classList.toggle('disabled', current === 0);
-            btnDown.classList.toggle('disabled', current === TOTAL - 1);
+            btnUp.classList.toggle("disabled", current === 0);
+            btnDown.classList.toggle("disabled", current === TOTAL - 1);
             scrollProg.style.height = `${(current / (TOTAL - 1)) * 100}%`;
         }
 
@@ -720,58 +845,78 @@
             current = index;
 
             // gold flash
-            transFlash.style.opacity = '1';
-            setTimeout(() => { transFlash.style.opacity = '0'; }, 130);
+            transFlash.style.opacity = "1";
+            setTimeout(() => {
+                transFlash.style.opacity = "0";
+            }, 130);
 
             // slide track
             track.style.transform = `translateY(${-current * 100}vh)`;
 
             // update panel states
             panels.forEach((p, i) => {
-                p.classList.remove('in-view', 'above');
+                p.classList.remove("in-view", "above");
                 if (i === current) {
-                    setTimeout(() => p.classList.add('in-view'), 90);
+                    setTimeout(() => p.classList.add("in-view"), 90);
                 } else if (i < current) {
-                    p.classList.add('above');
+                    p.classList.add("above");
                 }
             });
 
             updateUI();
-            setTimeout(() => { isScrolling = false; }, 1160);
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1160);
         }
 
         // Buttons
-        btnUp.addEventListener('click', () => goTo(current - 1));
-        btnDown.addEventListener('click', () => goTo(current + 1));
+        btnUp.addEventListener("click", () => goTo(current - 1));
+        btnDown.addEventListener("click", () => goTo(current + 1));
 
         // Keyboard
-        document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowDown' || e.key === 'PageDown') goTo(current + 1);
-            if (e.key === 'ArrowUp' || e.key === 'PageUp') goTo(current - 1);
-            if (e.key === 'Escape') window.location.href = 'index.html';
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowDown" || e.key === "PageDown") goTo(current + 1);
+            if (e.key === "ArrowUp" || e.key === "PageUp") goTo(current - 1);
+            if (e.key === "Escape") window.location.href = "index.html";
         });
 
         // Wheel
         let wheelTimer = null;
-        document.addEventListener('wheel', e => {
-            e.preventDefault();
-            clearTimeout(wheelTimer);
-            wheelTimer = setTimeout(() => {
-                e.deltaY > 0 ? goTo(current + 1) : goTo(current - 1);
-            }, 50);
-        }, { passive: false });
+        document.addEventListener(
+            "wheel",
+            (e) => {
+                e.preventDefault();
+                clearTimeout(wheelTimer);
+                wheelTimer = setTimeout(() => {
+                    e.deltaY > 0 ? goTo(current + 1) : goTo(current - 1);
+                }, 50);
+            },
+            { passive: false }
+        );
 
         // Touch
         let touchY = 0;
-        document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
-        document.addEventListener('touchend', e => {
-            const dy = touchY - e.changedTouches[0].clientY;
-            if (Math.abs(dy) > 50) { dy > 0 ? goTo(current + 1) : goTo(current - 1); }
-        }, { passive: true });
+        document.addEventListener(
+            "touchstart",
+            (e) => {
+                touchY = e.touches[0].clientY;
+            },
+            { passive: true }
+        );
+        document.addEventListener(
+            "touchend",
+            (e) => {
+                const dy = touchY - e.changedTouches[0].clientY;
+                if (Math.abs(dy) > 50) {
+                    dy > 0 ? goTo(current + 1) : goTo(current - 1);
+                }
+            },
+            { passive: true }
+        );
 
         // Init
         updateUI();
-        setTimeout(() => panels[0].classList.add('in-view'), 100);
+        setTimeout(() => panels[0].classList.add("in-view"), 100);
     </script>
 </body>
 
