@@ -85,6 +85,7 @@
 
         .panel.full.in-view .panel-img {
             animation: kbFull 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            size-adjust: auto;
         }
 
         @keyframes kbFull {
@@ -363,14 +364,16 @@
 
         /* ══════════════════════════════════
            MUSIC BUTTON — bottom-right floating circular
+           (ported from the Album page's sound toggle:
+           wave-bar animation + gold ripple pulse + hover label)
         ══════════════════════════════════ */
         .music-btn {
             position: fixed;
             bottom: 28px;
             right: 70px;
             z-index: 1001;
-            width: 52px;
-            height: 52px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: rgba(14, 12, 8, 0.82);
             border: 1.5px solid rgba(255, 255, 255, 0.13);
@@ -380,146 +383,156 @@
             justify-content: center;
             backdrop-filter: blur(12px);
             transition: background 0.35s ease, border-color 0.35s ease,
-                box-shadow 0.35s ease;
+                box-shadow 0.35s ease, transform 0.2s ease;
             outline: none;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .music-btn:hover {
             background: rgba(201, 169, 110, 0.15);
             border-color: rgba(201, 169, 110, 0.45);
             box-shadow: 0 0 18px rgba(201, 169, 110, 0.12);
+            color: var(--gold);
+            transform: scale(1.06);
         }
 
         .music-btn.playing {
-            border-color: rgba(201, 169, 110, 0.38);
+            border-color: rgba(201, 169, 110, 0.4);
         }
 
-        /* Equalizer bars */
-        .eq-bars {
+        /* Gold ripple pulse — only while playing */
+        @keyframes musicRipple {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1.55);
+                opacity: 0;
+            }
+        }
+
+        .music-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid var(--gold);
+            opacity: 0;
+            animation: none;
+        }
+
+        .music-btn.playing::before {
+            animation: musicRipple 1.8s ease-out infinite;
+        }
+
+        /* Wave bars (replaces the old equalizer-bar icon) */
+        .wave-bars {
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             gap: 2.5px;
-            height: 18px;
         }
 
-        .eq-bar {
-            width: 3px;
+        .wave-bars .bar {
+            width: 2.5px;
             border-radius: 2px;
-            background: rgba(255, 255, 255, 0.65);
-            transition: background 0.3s;
-            transform-origin: bottom;
+            background: currentColor;
         }
 
-        .music-btn.playing .eq-bar {
-            background: var(--gold);
-        }
+        @keyframes barBounce1 {
 
-        /* Animated heights when playing */
-        .music-btn.playing .eq-bar:nth-child(1) {
-            animation: eq1 0.7s ease-in-out infinite alternate;
-        }
-
-        .music-btn.playing .eq-bar:nth-child(2) {
-            animation: eq2 0.5s ease-in-out infinite alternate;
-        }
-
-        .music-btn.playing .eq-bar:nth-child(3) {
-            animation: eq3 0.9s ease-in-out infinite alternate;
-        }
-
-        .music-btn.playing .eq-bar:nth-child(4) {
-            animation: eq4 0.6s ease-in-out infinite alternate;
-        }
-
-        .music-btn.playing .eq-bar:nth-child(5) {
-            animation: eq5 0.8s ease-in-out infinite alternate;
-        }
-
-        /* Static short bars when paused */
-        .music-btn:not(.playing) .eq-bar:nth-child(1) {
-            height: 6px;
-        }
-
-        .music-btn:not(.playing) .eq-bar:nth-child(2) {
-            height: 10px;
-        }
-
-        .music-btn:not(.playing) .eq-bar:nth-child(3) {
-            height: 14px;
-        }
-
-        .music-btn:not(.playing) .eq-bar:nth-child(4) {
-            height: 9px;
-        }
-
-        .music-btn:not(.playing) .eq-bar:nth-child(5) {
-            height: 5px;
-        }
-
-        @keyframes eq1 {
-            from {
+            0%,
+            100% {
                 height: 4px;
             }
 
-            to {
+            50% {
                 height: 14px;
             }
         }
 
-        @keyframes eq2 {
-            from {
-                height: 8px;
+        @keyframes barBounce2 {
+
+            0%,
+            100% {
+                height: 9px;
             }
 
-            to {
-                height: 18px;
-            }
-        }
-
-        @keyframes eq3 {
-            from {
-                height: 12px;
-            }
-
-            to {
-                height: 6px;
-            }
-        }
-
-        @keyframes eq4 {
-            from {
-                height: 6px;
-            }
-
-            to {
-                height: 16px;
-            }
-        }
-
-        @keyframes eq5 {
-            from {
-                height: 10px;
-            }
-
-            to {
+            50% {
                 height: 4px;
             }
         }
 
-        /* Muted slash line overlay */
-        .eq-muted-line {
+        @keyframes barBounce3 {
+
+            0%,
+            100% {
+                height: 6px;
+            }
+
+            50% {
+                height: 16px;
+            }
+        }
+
+        @keyframes barBounce4 {
+
+            0%,
+            100% {
+                height: 11px;
+            }
+
+            50% {
+                height: 3px;
+            }
+        }
+
+        .music-btn.playing .bar:nth-child(1) {
+            animation: barBounce1 0.8s ease-in-out infinite;
+            color: var(--gold);
+        }
+
+        .music-btn.playing .bar:nth-child(2) {
+            animation: barBounce2 0.8s ease-in-out infinite 0.1s;
+            color: var(--gold);
+        }
+
+        .music-btn.playing .bar:nth-child(3) {
+            animation: barBounce3 0.8s ease-in-out infinite 0.2s;
+            color: var(--gold);
+        }
+
+        .music-btn.playing .bar:nth-child(4) {
+            animation: barBounce4 0.8s ease-in-out infinite 0.3s;
+            color: var(--gold);
+        }
+
+        .music-btn:not(.playing) .bar {
+            height: 4px;
+            animation: none !important;
+        }
+
+        /* Hover label, slides in from the right like the Album page */
+        .music-label {
             position: absolute;
-            width: 2px;
-            height: 26px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 2px;
-            transform: rotate(40deg);
-            display: none;
+            right: 64px;
+            font-family: "Jost", sans-serif;
+            font-weight: 200;
+            font-size: 8px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(6px);
+            transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
         }
 
-        .music-btn:not(.playing) .eq-muted-line {
-            display: block;
+        .music-btn:hover .music-label {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         /* ── TOP BAR ── */
@@ -648,19 +661,18 @@
         <div class="top-bar-brand">
             <div class="top-bar-icon"></div>
         </div>
-        <span class="top-bar-label">Shamika &amp; Buddhini · June 2025</span>
+        <span class="top-bar-label">Shamika &amp; Buddhini</span>
     </div>
 
     <!-- MUSIC BUTTON -->
     <button class="music-btn" id="musicBtn" title="Toggle music" aria-label="Toggle background music">
-        <div class="eq-bars">
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
+        <span class="music-label" id="musicLabel">Sound on</span>
+        <div class="wave-bars">
+            <div class="bar" style="height:4px"></div>
+            <div class="bar" style="height:9px"></div>
+            <div class="bar" style="height:6px"></div>
+            <div class="bar" style="height:11px"></div>
         </div>
-        <div class="eq-muted-line"></div>
     </button>
 
     <!-- NAV ARROWS + CLOSE -->
@@ -979,7 +991,7 @@
 
     <script>
         /* ══════════════════════════════════
-             GALLERY SCROLL
+          GALLERY SCROLL
           ══════════════════════════════════ */
         const track = document.getElementById("galleryTrack");
         const panels = [...document.querySelectorAll(".panel")];
@@ -1068,6 +1080,7 @@
           ══════════════════════════════════ */
         const audio = document.getElementById("bgAudio");
         const musicBtn = document.getElementById("musicBtn");
+        const musicLabel = document.getElementById("musicLabel");
         let isPlaying = false;
 
         function setPlaying(state) {
@@ -1077,6 +1090,7 @@
                 "aria-label",
                 state ? "Mute music" : "Play music"
             );
+            musicLabel.textContent = state ? "Sound on" : "Sound off";
         }
 
         function tryAutoplay() {
