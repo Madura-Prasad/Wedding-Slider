@@ -78,7 +78,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+            transition: transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.6s ease;
             transform: scale(1.06);
         }
 
@@ -378,7 +379,8 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(12px);
-            transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+            transition: background 0.35s ease, border-color 0.35s ease,
+                box-shadow 0.35s ease;
             outline: none;
         }
 
@@ -531,7 +533,9 @@
             align-items: center;
             justify-content: space-between;
             padding: 18px 36px;
-            background: linear-gradient(to bottom, rgba(14, 12, 8, 0.65) 0%, transparent 100%);
+            background: linear-gradient(to bottom,
+                    rgba(14, 12, 8, 0.65) 0%,
+                    transparent 100%);
             pointer-events: none;
         }
 
@@ -573,7 +577,9 @@
             top: 0;
             width: 1.5px;
             height: 0%;
-            background: linear-gradient(to bottom, rgba(201, 169, 110, 0.25), var(--gold));
+            background: linear-gradient(to bottom,
+                    rgba(201, 169, 110, 0.25),
+                    var(--gold));
             z-index: 1000;
             transition: height 1.1s cubic-bezier(0.77, 0, 0.175, 1);
         }
@@ -680,12 +686,13 @@
     <!-- GALLERY -->
     <div class="gallery-scroll">
         <div class="gallery-track" id="galleryTrack">
-
             <!-- PANEL 1: FULL WIDTH -->
             <div class="panel full in-view" data-index="0">
-                <div class="panel-img"
-                    style="background-image: url('https://drive.google.com/thumbnail?id=1STfVZpryTkxG5QgxeoyD58RUwocZDno9&sz=w2000'); background-color: #d4c8b8; opacity: 0.4;">
-                </div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1STfVZpryTkxG5QgxeoyD58RUwocZDno9&sz=w2000');
+              background-color: #d4c8b8;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
                 <div class="panel-caption">
@@ -698,9 +705,14 @@
             <!-- PANEL 2: SPLIT -->
             <div class="panel split" data-index="1">
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=19n9ARBMNBqfkoxJWg5hvbh2rtmx6tPCf&sz=w2000'); background-color: #c8b8a8; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=19n9ARBMNBqfkoxJWg5hvbh2rtmx6tPCf&sz=w2000');
+                background-color: #c8b8a8;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -709,9 +721,14 @@
                     </div>
                 </div>
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=1_6J3jzyNQEPyOmPmsq1KcVoxsa1QuXO6&sz=w2000'); background-color: #1a1810; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1_6J3jzyNQEPyOmPmsq1KcVoxsa1QuXO6&sz=w2000');
+                background-color: #1a1810;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -724,9 +741,11 @@
 
             <!-- PANEL 3: FULL -->
             <div class="panel full" data-index="2">
-                <div class="panel-img"
-                    style="background-image: url('https://drive.google.com/thumbnail?id=1sCa2NhIAavJls-nEPWaU7MYen4TBfOQv&sz=w2000'); background-color: #18200e; opacity: 0.4;">
-                </div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1sCa2NhIAavJls-nEPWaU7MYen4TBfOQv&sz=w2000');
+              background-color: #18200e;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
                 <div class="panel-caption">
@@ -739,9 +758,15 @@
             <!-- PANEL 4: SPLIT -->
             <div class="panel split" data-index="3">
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=1Md3darDeha4qBEa0_vgDiA-ZWGWDy74t&sz=w2000'); background-color: #2a1810; background-position: 70% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1Md3darDeha4qBEa0_vgDiA-ZWGWDy74t&sz=w2000');
+                background-color: #2a1810;
+                background-position: 70% center;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+                opacity: 0.4;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -750,9 +775,15 @@
                     </div>
                 </div>
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=18kapZEiRL9n_H0FXNt4fTZjBDajaDuVd&sz=w2000'); background-color: #d0c8b8; background-position: 80% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=18kapZEiRL9n_H0FXNt4fTZjBDajaDuVd&sz=w2000');
+                background-color: #d0c8b8;
+                background-position: 80% center;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -765,9 +796,11 @@
 
             <!-- PANEL 5: FULL -->
             <div class="panel full" data-index="4">
-                <div class="panel-img"
-                    style="background-image: url('https://drive.google.com/thumbnail?id=1fP5umfFwUpElAapRU0a1ffX23kRngOK5&sz=w2000'); background-color: #100c08; opacity: 0.4;">
-                </div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1fP5umfFwUpElAapRU0a1ffX23kRngOK5&sz=w2000');
+              background-color: #100c08;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
                 <div class="panel-caption">
@@ -780,9 +813,15 @@
             <!-- PANEL 6: SPLIT -->
             <div class="panel split" data-index="5">
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=14Ms8rpKlSZYXvI_WY5Px9Wk0GFusucFc&sz=w2000'); background-color: #1e1408; background-position: 30% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=14Ms8rpKlSZYXvI_WY5Px9Wk0GFusucFc&sz=w2000');
+                background-color: #1e1408;
+                background-position: 30% center;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -791,9 +830,15 @@
                     </div>
                 </div>
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=1eyTd5B_xkUikDcHtoUJ_5-d5v2HTbf9L&sz=w2000'); background-color: #ccc0a8; background-position: 20% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1eyTd5B_xkUikDcHtoUJ_5-d5v2HTbf9L&sz=w2000');
+                background-color: #ccc0a8;
+                background-position: 20% center;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -806,9 +851,11 @@
 
             <!-- PANEL 7: FULL -->
             <div class="panel full" data-index="4">
-                <div class="panel-img"
-                    style="background-image: url('https://drive.google.com/thumbnail?id=1G9fASUWzCE93bBICe8RSlLsHdfxP42GG&sz=w2000'); background-color: #100c08; opacity: 0.4;">
-                </div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1G9fASUWzCE93bBICe8RSlLsHdfxP42GG&sz=w2000');
+              background-color: #100c08;
+              opacity: 0.4;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
                 <div class="panel-caption">
@@ -821,9 +868,15 @@
             <!-- PANEL 8: SPLIT -->
             <div class="panel split" data-index="5">
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=1RuKwVI6xuINW7u8mCyWMfHRBzPgUb_KM&sz=w2000'); background-color: #1e1408; background-position: 30% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=1RuKwVI6xuINW7u8mCyWMfHRBzPgUb_KM&sz=w2000');
+                background-color: #1e1408;
+                background-position: 30% center;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -832,9 +885,15 @@
                     </div>
                 </div>
                 <div class="split-half">
-                    <div class="panel-img"
-                        style="background-image: url('https://drive.google.com/thumbnail?id=18cVVxkgZ82kiTCv6oLwtDbfE8-mX9fzK&sz=w2000'); background-color: #ccc0a8; background-position: 20% center; opacity: 0.4;">
-                    </div>
+                    <div class="panel-img" style="
+                background-image: url('https://drive.google.com/thumbnail?id=18cVVxkgZ82kiTCv6oLwtDbfE8-mX9fzK&sz=w2000');
+                background-color: #ccc0a8;
+                background-position: 20% center;
+                opacity: 0.4;
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+              "></div>
                     <div class="panel-overlay"></div>
                     <div class="panel-grain"></div>
                     <div class="panel-caption">
@@ -847,23 +906,60 @@
 
             <!-- PANEL 9: FULL — Finale -->
             <div class="panel full" data-index="6">
-                <div class="panel-img"
-                    style="background-image: url('https://drive.google.com/thumbnail?id=1dP4GtC0a3uPlmr19wYA2Y8Rt8AhGt-Bu&sz=w2000'); background-color: #1e1210; opacity: 0.25;">
-                </div>
+                <div class="panel-img" style="
+              background-image: url('https://drive.google.com/thumbnail?id=1dP4GtC0a3uPlmr19wYA2Y8Rt8AhGt-Bu&sz=w2000');
+              background-color: #1e1210;
+              opacity: 0.25;
+            "></div>
                 <div class="panel-overlay"></div>
                 <div class="panel-grain"></div>
-                <div
-                    style="position: absolute; inset: 0; z-index: 9; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; pointer-events: none;">
-                    <p
-                        style="font-weight: 200; font-size: 9px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px;">
-                        Forever</p>
-                    <h2
-                        style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(38px, 7vw, 80px); color: #fff; line-height: 0.95;">
+                <div style="
+              position: absolute;
+              inset: 0;
+              z-index: 9;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              padding: 20px;
+              pointer-events: none;
+            ">
+                    <p style="
+                font-weight: 200;
+                font-size: 9px;
+                letter-spacing: 0.42em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 18px;
+              ">
+                        Forever
+                    </p>
+                    <h2 style="
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-weight: 300;
+                font-size: clamp(38px, 7vw, 80px);
+                color: #fff;
+                line-height: 0.95;
+              ">
                         Shamika <span style="color: var(--gold)">&amp;</span> Buddhini
                     </h2>
-                    <div style="width: 36px; height: 1px; background: var(--gold); margin: 24px auto;"></div>
-                    <p
-                        style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(13px, 1.6vw, 17px); color: rgba(255, 255, 255, 0.58); max-width: 480px; line-height: 1.8;">
+                    <div style="
+                width: 36px;
+                height: 1px;
+                background: var(--gold);
+                margin: 24px auto;
+              "></div>
+                    <p style="
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-weight: 300;
+                font-size: clamp(13px, 1.6vw, 17px);
+                color: rgba(255, 255, 255, 0.58);
+                max-width: 480px;
+                line-height: 1.8;
+              ">
                         June 09, 2025 &nbsp;·&nbsp; A day written in love
                     </p>
                 </div>
@@ -873,7 +969,6 @@
                 </div>
                 <div class="panel-number">09 / 09</div>
             </div>
-
         </div>
     </div>
 
@@ -884,8 +979,8 @@
 
     <script>
         /* ══════════════════════════════════
-           GALLERY SCROLL
-        ══════════════════════════════════ */
+             GALLERY SCROLL
+          ══════════════════════════════════ */
         const track = document.getElementById("galleryTrack");
         const panels = [...document.querySelectorAll(".panel")];
         const btnUp = document.getElementById("btnUp");
@@ -909,7 +1004,9 @@
             isScrolling = true;
             current = index;
             transFlash.style.opacity = "1";
-            setTimeout(() => { transFlash.style.opacity = "0"; }, 130);
+            setTimeout(() => {
+                transFlash.style.opacity = "0";
+            }, 130);
             track.style.transform = `translateY(${-current * 100}vh)`;
             panels.forEach((p, i) => {
                 p.classList.remove("in-view", "above");
@@ -917,7 +1014,9 @@
                 else if (i < current) p.classList.add("above");
             });
             updateUI();
-            setTimeout(() => { isScrolling = false; }, 1160);
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1160);
         }
 
         btnUp.addEventListener("click", () => goTo(current - 1));
@@ -930,27 +1029,43 @@
         });
 
         let wheelTimer = null;
-        document.addEventListener("wheel", (e) => {
-            e.preventDefault();
-            clearTimeout(wheelTimer);
-            wheelTimer = setTimeout(() => {
-                e.deltaY > 0 ? goTo(current + 1) : goTo(current - 1);
-            }, 50);
-        }, { passive: false });
+        document.addEventListener(
+            "wheel",
+            (e) => {
+                e.preventDefault();
+                clearTimeout(wheelTimer);
+                wheelTimer = setTimeout(() => {
+                    e.deltaY > 0 ? goTo(current + 1) : goTo(current - 1);
+                }, 50);
+            },
+            { passive: false }
+        );
 
         let touchY = 0;
-        document.addEventListener("touchstart", (e) => { touchY = e.touches[0].clientY; }, { passive: true });
-        document.addEventListener("touchend", (e) => {
-            const dy = touchY - e.changedTouches[0].clientY;
-            if (Math.abs(dy) > 50) { dy > 0 ? goTo(current + 1) : goTo(current - 1); }
-        }, { passive: true });
+        document.addEventListener(
+            "touchstart",
+            (e) => {
+                touchY = e.touches[0].clientY;
+            },
+            { passive: true }
+        );
+        document.addEventListener(
+            "touchend",
+            (e) => {
+                const dy = touchY - e.changedTouches[0].clientY;
+                if (Math.abs(dy) > 50) {
+                    dy > 0 ? goTo(current + 1) : goTo(current - 1);
+                }
+            },
+            { passive: true }
+        );
 
         updateUI();
         setTimeout(() => panels[0].classList.add("in-view"), 100);
 
         /* ══════════════════════════════════
-           MUSIC PLAYER
-        ══════════════════════════════════ */
+             MUSIC PLAYER
+          ══════════════════════════════════ */
         const audio = document.getElementById("bgAudio");
         const musicBtn = document.getElementById("musicBtn");
         let isPlaying = false;
@@ -958,7 +1073,10 @@
         function setPlaying(state) {
             isPlaying = state;
             musicBtn.classList.toggle("playing", state);
-            musicBtn.setAttribute("aria-label", state ? "Mute music" : "Play music");
+            musicBtn.setAttribute(
+                "aria-label",
+                state ? "Mute music" : "Play music"
+            );
         }
 
         function tryAutoplay() {
@@ -987,7 +1105,10 @@
 
                         const unlock = () => {
                             audio.volume = 0.5; // Lower volume here too
-                            audio.play().then(() => setPlaying(true)).catch(() => { });
+                            audio
+                                .play()
+                                .then(() => setPlaying(true))
+                                .catch(() => { });
 
                             document.removeEventListener("click", unlock);
                             document.removeEventListener("keydown", unlock);
@@ -1007,13 +1128,20 @@
                 audio.pause();
                 setPlaying(false);
             } else {
-                audio.play().then(() => setPlaying(true)).catch(() => { });
+                audio
+                    .play()
+                    .then(() => setPlaying(true))
+                    .catch(() => { });
             }
         });
 
         // Stop audio when user closes/leaves the page
-        window.addEventListener("pagehide", () => { audio.pause(); });
-        window.addEventListener("beforeunload", () => { audio.pause(); });
+        window.addEventListener("pagehide", () => {
+            audio.pause();
+        });
+        window.addEventListener("beforeunload", () => {
+            audio.pause();
+        });
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) audio.pause();
             else if (isPlaying) audio.play().catch(() => { });
@@ -1021,10 +1149,6 @@
 
         // Kick off autoplay
         tryAutoplay();
-
-
-
-
 
         document.addEventListener("keydown", function (e) {
             if (
@@ -1038,8 +1162,7 @@
             }
         });
 
-
-        document.addEventListener("contextmenu", e => e.preventDefault());
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
     </script>
 </body>
 

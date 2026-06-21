@@ -1048,6 +1048,11 @@
   <div class="swipe-left" id="swipeLeft"></div>
   <div class="swipe-right" id="swipeRight"></div>
 
+  <!-- Background Audio — same audio file used on the Gallery page -->
+  <audio id="bgAudio" loop preload="auto">
+    <source src="bg_audio.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- Sound Button — starts PLAYING by default -->
   <button class="sound-btn playing" id="soundBtn" aria-label="Toggle sound">
     <span class="sound-label" id="soundLabel">Sound on</span>
@@ -1150,168 +1155,63 @@
 
   <script>
     // ═══════════════════════════════════════════════
-    // WEB AUDIO API — Procedural Wedding Ambient Music
-    // Default: PLAYING. Autostarted on first user interaction.
+    // BACKGROUND AUDIO — same bg_audio.mp3 file used on the Gallery page
+    // Default: PLAYING. Autostarted on first user interaction if blocked.
     // ═══════════════════════════════════════════════
 
-    let audioCtx = null;
-    let masterGain = null;
-    let musicNodes = [];
-    let musicRunning = false;
-    let loopTimer = null;
+    const bgAudio = document.getElementById('bgAudio');
     let isMuted = false; // DEFAULT: playing
+    let musicStarted = false;
+    let fadeTimer = null;
 
-    function createAudioContext() {
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      masterGain = audioCtx.createGain();
-      masterGain.gain.value = 0;
-      masterGain.connect(audioCtx.destination);
-    }
-
-    function createReverb(ctx, seconds) {
-      const rate = ctx.sampleRate, len = rate * seconds;
-      const buf = ctx.createBuffer(2, len, rate);
-      for (let c = 0; c < 2; c++) {
-        const d = buf.getChannelData(c);
-        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.8);
-      }
-      const conv = ctx.createConvolver();
-      conv.buffer = buf;
-      return conv;
-    }
-
-    function playNote(freq, startTime, duration, velocity, reverb) {
-      const env = audioCtx.createGain();
-      env.gain.setValueAtTime(0, startTime);
-      env.gain.linearRampToValueAtTime(velocity * 0.18, startTime + 0.025);
-      env.gain.exponentialRampToValueAtTime(velocity * 0.08, startTime + 0.3);
-      env.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-      env.connect(reverb);
-      [1, 2, 3, 4.05].forEach((h, i) => {
-        const osc = audioCtx.createOscillator();
-        const hGain = audioCtx.createGain();
-        osc.type = i === 0 ? 'triangle' : 'sine';
-        osc.frequency.value = freq * h;
-        hGain.gain.value = [1, 0.35, 0.15, 0.06][i];
-        osc.connect(hGain); hGain.connect(env);
-        osc.start(startTime); osc.stop(startTime + duration + 0.5);
-      });
-    }
-
-    function createPad(freq, startTime, duration) {
-      const padGain = audioCtx.createGain();
-      padGain.gain.setValueAtTime(0, startTime);
-      padGain.gain.linearRampToValueAtTime(0.04, startTime + 1.5);
-      padGain.gain.setValueAtTime(0.04, startTime + duration - 1.5);
-      padGain.gain.linearRampToValueAtTime(0, startTime + duration);
-      padGain.connect(masterGain);
-      [-0.08, 0, 0.09].forEach(detune => {
-        const osc = audioCtx.createOscillator();
-        osc.type = 'sawtooth'; osc.frequency.value = freq;
-        osc.detune.value = detune * 100;
-        const filt = audioCtx.createBiquadFilter();
-        filt.type = 'lowpass'; filt.frequency.value = 900; filt.Q.value = 0.5;
-        osc.connect(filt); filt.connect(padGain);
-        osc.start(startTime); osc.stop(startTime + duration + 0.2);
-        musicNodes.push(osc);
-      });
-    }
-
-    const D4 = 293.66, Fs4 = 369.99, G4 = 392, A4 = 440, B4 = 493.88, D5 = 587.33, Cs5 = 554.37, E5 = 659.25, Fs5 = 739.99;
-    const chordProg = [
-      { notes: [D4, Fs4, A4], bass: D4 / 2, dur: 8 },
-      { notes: [G4, B4, D5], bass: G4 / 2, dur: 8 },
-      { notes: [A4, Cs5, E5], bass: A4 / 2, dur: 8 },
-      { notes: [B4, D5, Fs5], bass: B4 / 2, dur: 8 },
-    ];
-    const melody = [
-      D5, Fs5, A4 * 2, Fs5, E5, D5, Cs5, D5,
-      G4 * 2, B4, D5, B4, A4, G4, Fs4, G4,
-      A4 * 2, Cs5, E5, Cs5, D5, E5, Fs5, E5,
-      B4, D5, Fs5, D5, Cs5, B4, A4, D5
-    ];
-
-    function scheduleMusicLoop(loopStart) {
-      const reverb = createReverb(audioCtx, 3.5);
-      const reverbGain = audioCtx.createGain();
-      reverbGain.gain.value = 0.55;
-      reverb.connect(reverbGain); reverbGain.connect(masterGain);
-      let t = loopStart;
-      const beatDur = 1.15;
-      chordProg.forEach(chord => {
-        playNote(chord.bass, t, chord.dur * beatDur * 0.9, 0.7, reverb);
-        t += chord.dur * beatDur;
-      });
-      t = loopStart;
-      chordProg.forEach(chord => {
-        chord.notes.forEach((note, i) => {
-          playNote(note, t + i * 0.22, 5.5, 0.55 - i * 0.08, reverb);
-          playNote(note, t + chord.dur * beatDur * 0.5 + i * 0.18, 4, 0.4, reverb);
-        });
-        t += chord.dur * beatDur;
-      });
-      const totalDur = chordProg.reduce((s, c) => s + c.dur, 0) * beatDur;
-      t = loopStart;
-      melody.forEach((note, i) => {
-        playNote(note, t + (i / melody.length) * totalDur, beatDur * 1.6, 0.35 + Math.random() * 0.1, reverb);
-      });
-      t = loopStart;
-      chordProg.forEach(chord => {
-        chord.notes.forEach(note => createPad(note / 2, t, chord.dur * beatDur));
-        t += chord.dur * beatDur;
-      });
-      if (musicRunning) {
-        loopTimer = setTimeout(() => scheduleMusicLoop(audioCtx.currentTime + 0.02), totalDur * 1000 - 200);
-      }
+    function fadeVolumeTo(target) {
+      clearInterval(fadeTimer);
+      fadeTimer = setInterval(() => {
+        const next = Math.min(bgAudio.volume + 0.02, target);
+        bgAudio.volume = next;
+        if (next >= target) clearInterval(fadeTimer);
+      }, 60);
     }
 
     function startMusic() {
-      if (!audioCtx) createAudioContext();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      musicRunning = true;
-      masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0.28, audioCtx.currentTime + 2.0);
-      scheduleMusicLoop(audioCtx.currentTime + 0.1);
-    }
-
-    function stopMusic() {
-      musicRunning = false;
-      clearTimeout(loopTimer);
-      if (masterGain) {
-        masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-        masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.8);
+      bgAudio.volume = 0;
+      const playPromise = bgAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          musicStarted = true;
+          fadeVolumeTo(0.28);
+        }).catch(() => {
+          // Autoplay blocked by the browser — wait for first interaction
+          musicStarted = false;
+        });
       }
     }
 
-    // ── Auto-start music on first user interaction (browser policy) ──
-    let musicStarted = false;
-    function tryStartMusic() {
-      if (musicStarted || isMuted) return;
-      musicStarted = true;
-      startMusic();
-      document.removeEventListener('click', tryStartMusic);
-      document.removeEventListener('keydown', tryStartMusic);
-      document.removeEventListener('touchstart', tryStartMusic);
+    function stopMusic() {
+      clearInterval(fadeTimer);
+      bgAudio.pause();
     }
 
-    // Attempt immediate start (works if page was already interacted with)
+    function tryStartMusic() {
+      if (musicStarted || isMuted) return;
+      startMusic();
+    }
+
+    // Attempt autoplay as soon as the page loads
     window.addEventListener('load', () => {
-      setTimeout(() => {
-        if (!musicStarted && !isMuted) {
-          createAudioContext();
-          if (audioCtx && audioCtx.state === 'running') {
-            musicStarted = true;
-            startMusic();
-          }
-        }
-      }, 500);
+      setTimeout(() => { if (!isMuted) tryStartMusic(); }, 500);
     });
 
-    // Fallback: start on first interaction
-    document.addEventListener('click', tryStartMusic);
-    document.addEventListener('keydown', tryStartMusic);
-    document.addEventListener('touchstart', tryStartMusic, { passive: true });
+    // Fallback: unlock playback on first interaction (covers autoplay-block cases)
+    function unlockOnInteraction() {
+      tryStartMusic();
+      document.removeEventListener('click', unlockOnInteraction);
+      document.removeEventListener('keydown', unlockOnInteraction);
+      document.removeEventListener('touchstart', unlockOnInteraction);
+    }
+    document.addEventListener('click', unlockOnInteraction);
+    document.addEventListener('keydown', unlockOnInteraction);
+    document.addEventListener('touchstart', unlockOnInteraction, { passive: true });
 
     // ═══════════════════════════════════════════════
     // BLUR TRANSITION ENGINE
@@ -1458,12 +1358,7 @@
 
     function unmute() {
       isMuted = false;
-      if (!musicStarted) {
-        musicStarted = true;
-        startMusic();
-      } else {
-        startMusic();
-      }
+      startMusic();
       soundBtn.classList.remove('muted');
       soundBtn.classList.add('playing');
       soundLabel.textContent = 'Sound on';
@@ -1478,6 +1373,15 @@
 
     soundBtn.addEventListener('click', () => {
       if (isMuted) unmute(); else mute();
+    });
+
+    // Pause when the tab is hidden, resume when it's visible again
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        bgAudio.pause();
+      } else if (!isMuted && musicStarted) {
+        bgAudio.play().catch(() => { });
+      }
     });
 
     // ── View Photos button ──
